@@ -88,6 +88,11 @@ void one_args_instructions(FILE* p_arabicaOutput, char* p_line, int* p_filesize)
         signed_arg_instruction(p_arabicaOutput, v_jmpIfTrue, v_value);
         (*p_filesize) += 5;
     } 
+    // (Label implementation) Regroup all jump instructions, handled by jmp_instruction
+    // else if (strcmp(v_operation, "JMP") == 0 && strcmp(v_operation, "JMP_IF_ZERO") == 0 && strcmp(v_operation, "JMP_IF_TRUE") == 0) {
+    //     jmp_instruction(p_arabicaOutput);
+    //     (*p_filesize) += 5;
+    // }
     else if (strcmp(v_operation, "LOAD_STR") == 0) {
         load_str(p_arabicaOutput, p_line, p_filesize);
     } 
