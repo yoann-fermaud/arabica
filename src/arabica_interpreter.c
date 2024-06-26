@@ -8,8 +8,10 @@
 
 #define OUT_HEADER_NAME "CODE"
 
-int main(int p_argc, char **p_args) {
-    if (p_argc != 2) {
+int main(int p_argc, char **p_args)
+{
+    if (p_argc != 2)
+    {
         printf("Error: incorrect number of arguments");
         return 1;
     }
@@ -18,15 +20,16 @@ int main(int p_argc, char **p_args) {
 
     FILE *v_arabicaInput = fopen(p_args[1], "r");
     FILE *v_arabicaOutput = fopen(OUT_HEADER_NAME, "wb");
-    if (v_arabicaInput == NULL || v_arabicaOutput == NULL) {
+    if (v_arabicaInput == NULL || v_arabicaOutput == NULL)
+    {
         perror("FileDirectoryError:");
         return 1;
     }
 
-    // fwrite(&tmp, 1, 16, v_arabicaOutput);
     arabica_header(v_arabicaOutput, arabica_filename(p_args[1]));
 
-    while (fgets(v_line, sizeof(v_line), v_arabicaInput)) {
+    while (fgets(v_line, sizeof(v_line), v_arabicaInput))
+    {
         line_parsing(v_arabicaOutput, v_line, v_filesize);
     }
 
@@ -41,18 +44,24 @@ int main(int p_argc, char **p_args) {
     return 0;
 }
 
-void arabica_header(FILE *p_arabicaOutput, char *p_arabicaName) {
+void arabica_header(FILE *p_arabicaOutput, char *p_arabicaName)
+{
     int v_nullByte = 0x00;
-    size_t v_filenameOffset = 16 - strlen(p_arabicaName);
+    size_t v_arabicaLength = strlen(p_arabicaName);
+    size_t v_filenameOffset = 16 - v_arabicaLength - 1;
 
     fwrite(OUT_HEADER_NAME, 4, 1, p_arabicaOutput);
     fwrite(&v_nullByte, 4, 1, p_arabicaOutput);
-    fwrite(p_arabicaName, strlen(p_arabicaName), 1, p_arabicaOutput);
-    fwrite(&v_nullByte, 1, v_filenameOffset, p_arabicaOutput);
+    fwrite(p_arabicaName, v_arabicaLength + 1, 1, p_arabicaOutput);
+
+    for (size_t i = 0; i < v_filenameOffset; i++)
+    {
+        fwrite(&v_nullByte, 1, 1, p_arabicaOutput);
+    }
 }
 
-char *arabica_filename(char *p_inputName) {
+char *arabica_filename(char *p_inputName)
+{
     char *v_filenameParsed = strtok(p_inputName, ".");
-    // printf("%s", v_filenameParsed);
     return v_filenameParsed;
 }
