@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -g3
+CFLAGS = -g3 -Wall -Wextra -Werror
 SRC_DIR = src
 SRC = $(wildcard $(SRC_DIR)/*.c)
 OBJ = $(SRC:.c=.o)
