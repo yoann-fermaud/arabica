@@ -4,11 +4,9 @@
 #include "../include/arabica_parser.h"
 #include "../include/arabica_instructions.h"
 
-
-
 void line_parsing(FILE* p_arabicaOutput, char* p_line, int* p_filesize) {
     int v_nbWords = 0;
-    for (int i= 0; i < strlen(p_line); i++) {
+    for (size_t i = 0; i < strlen(p_line); i++) {
         if(p_line[i] == ' ') {
             v_nbWords++;
         }
